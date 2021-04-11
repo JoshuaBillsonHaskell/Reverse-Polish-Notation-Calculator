@@ -4,26 +4,20 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c2de92054193a3f5dcd5ea1daaee9bbcd97bfc1d93bdb507d6b7da59e475167c
+-- hash: 37dad8614155424be80aa173b8af817755fbf508e23fc1ef9f4dc54e2f911f16
 
 name:           ReversePolishCalculator
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/Github username here/ReversePolishCalculator#readme>
-homepage:       https://github.com/Github username here/ReversePolishCalculator#readme
-bug-reports:    https://github.com/Github username here/ReversePolishCalculator/issues
-author:         Author name here
-maintainer:     Author email here
-copyright:      2019 Author name here
+author:         Joshua Billson
+maintainer:     jmbillson@outlook.com
+copyright:      2021 Joshua Billson
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
     ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/Github username here/ReversePolishCalculator
 
 library
   exposed-modules:
@@ -34,6 +28,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , regex-compat
   default-language: Haskell2010
 
 executable ReversePolishCalculator-exe
@@ -46,6 +41,7 @@ executable ReversePolishCalculator-exe
   build-depends:
       ReversePolishCalculator
     , base >=4.7 && <5
+    , regex-compat
   default-language: Haskell2010
 
 test-suite ReversePolishCalculator-test
@@ -59,4 +55,5 @@ test-suite ReversePolishCalculator-test
   build-depends:
       ReversePolishCalculator
     , base >=4.7 && <5
+    , regex-compat
   default-language: Haskell2010

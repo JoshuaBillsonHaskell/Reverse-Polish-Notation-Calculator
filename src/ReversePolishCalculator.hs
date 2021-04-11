@@ -4,7 +4,10 @@ module ReversePolishCalculator
 
 import Control.Exception
 import Control.Monad
+import Data.Maybe (isNothing)
+import Text.Regex (mkRegex, matchRegex)
 
+type Stack = [Double]
 
 -- Given An Expression In Reverse polish Notation, Print The Result If Possible Otherwise Throw An Error
 evaluateExpression :: String -> IO ()
@@ -17,19 +20,16 @@ evaluateExpression string = do
 
 -- Try To Update The Stack By Adding A Number Or Applying An Operator. May Throw An IOError If Invalid
 -- Input Is Given. For Example, If An Operator Is Applied To A Stack With Fewer Than 2 Numbers.
-buildStack :: [Double] -> String -> Either IOError [Double]
+buildStack :: Stack -> String -> Either IOError Stack
 buildStack stack char
     | length stack < 2 && (char == "*" || char == "/" || char == "+" || char == "-") = Left (userError "Invalid Expression Given!")
+    | isNothing (matchRegex (mkRegex "[*/+-0123456789.]") char) = Left (userError "Invalid Character Encountered!")
     | otherwise = Right (addToStack stack char)
-
-
--- Update The Stack By Adding A New Number Or Applying An Operator
-addToStack :: [Double] -> String -> [Double]
-addToStack (x:y:xs) "*" = x * y : xs
-addToStack (x:y:xs) "/" = y / x : xs
-addToStack (x:y:xs) "+" = x + y : xs
-addToStack (x:y:xs) "-" = y - x : xs
-addToStack xs a = read a : xs
+    where addToStack (x:y:xs) "*" = x * y : xs
+          addToStack (x:y:xs) "/" = y / x : xs
+          addToStack (x:y:xs) "+" = x + y : xs
+          addToStack (x:y:xs) "-" = y - x : xs
+          addToStack xs a = read a : xs
 
 
 -- If A Exception Occurs, Print To The Terminal
